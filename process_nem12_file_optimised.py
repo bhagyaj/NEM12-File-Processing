@@ -81,7 +81,7 @@ def process_300_record(line_data, current_nmi, interval_length, interval_offset,
 
     :param line_data: List containing the fields of the 300 record
     :param current_nmi: Current NMI
-    :param interval_length: Interval length
+    :param interval_length: Interval between meter recording
     :param interval_offset: Offset for generating unique timestamps
     :param inserts: List of tuples to record batch data
     """

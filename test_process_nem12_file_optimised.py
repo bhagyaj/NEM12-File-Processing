@@ -3,12 +3,14 @@ from process_nem12_file_optimised import process_200_record, process_300_record,
 from datetime import datetime, timedelta
 
 class TestRecordProcessing(unittest.TestCase):
+    # Test for processing 200 records
     def test_process_200_record(self):
         line_data = ['200', 'NEM1201009', 'E1E2', '1', 'E1', 'N1', '01009', 'kWh', '30', '20050610']
         interval_offset = 0
         expected_result = ('NEM1201009', 30, 1)
         self.assertEqual(process_200_record(line_data, interval_offset), expected_result)
 
+    # Test for processing 300 records
     def test_process_300_record(self):
         line_data = ['300', '20050301', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0.461', '0.810',
                      '0.568', '1.234', '1.353', '1.507', '1.344', '1.773', '0', '.848', '1.271', '0.895', '1.327',

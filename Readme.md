@@ -14,7 +14,18 @@ This Python script processes NEM12 format files and inserts meter readings into 
 1. Ensure Python 3.x and PostgreSQL are installed on your system.
 2. Install the required Python packages using `pip install -r requirements.txt`.
 3. Create a PostgreSQL database named `flo_test`.
-4. Update the database connection parameters (dbname, user, password, host, port) in the `Database` class in the `process_nem12_file.py` file.
+4. Use the following SQL script to create the `meter_readings` table in your database:
+
+   ```sql
+   CREATE TABLE meter_readings (
+       id UUID DEFAULT gen_random_uuid() NOT NULL,
+       nmi VARCHAR(10) NOT NULL,
+       timestamp TIMESTAMP NOT NULL,
+       consumption NUMERIC NOT NULL,
+       CONSTRAINT meter_readings_pk PRIMARY KEY (id),
+       CONSTRAINT meter_readings_unique_consumption UNIQUE (nmi, timestamp)
+   );
+5. Update the database connection parameters (dbname, user, password, host, port) in the `Database` class in the `process_nem12_file.py` file.
 
 ## Usage
 To process an NEM12 file, run the script with the file path as the argument:
@@ -56,6 +67,7 @@ Make sure to update the test file paths and database connection parameters as ne
 - Optimization Gained: The initial execution time of the script `process_nem12_file.py` was measured at 0.423 seconds. With the implemented optimizations, the current execution time has been reduced to 0.16 seconds. This significant reduction in execution time enhances the script's efficiency and responsiveness, allowing it to process large NEM12 files more quickly and effectively.
 - While the script optimizes performance and ensures efficient processing of large datasets, it's crucial to note that it currently lacks robust mechanisms for handling data loss. In a production environment, it's recommended to implement strategies for data redundancy, backup, and recovery to mitigate the risk of data loss in case of failures or errors during processing.
 - Consider integrating the script into a CI/CD pipeline for automated testing, building, and deployment in a production environment. CI/CD pipelines help streamline development workflows, improve code quality, and ensure reliable deployments of the script and associated changes.
+-  While the provided tests cover basic functionality, there is scope for adding more tests to ensure comprehensive test coverage. Examples of additional tests could include edge cases, handling of invalid input, and testing different scenarios to validate the robustness and reliability of the script under various conditions.
 
 
 
